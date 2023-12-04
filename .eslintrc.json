@@ -10,5 +10,7 @@
     "sourceType": "module"
   },
   "plugins": ["standard", "promise", "import", "node"],
-  "rules": {}
+  "rules": {
+    "comma-dangle": ["error", "always-multiline"]
+  }
 }
