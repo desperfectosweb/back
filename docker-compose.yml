@@ -1,0 +1,16 @@
+services:
+  desperfectosweb-back:
+    container_name: desperfectosweb-back
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    command: npm run dev
+    volumes:
+      - .:/app
+      - /app/node_modules # maintain node_modules when closing the container
+networks:
+  default:
+    name: desperfectosweb-network
+    external: true

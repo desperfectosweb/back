@@ -4,13 +4,15 @@ import { IResponse } from '../types/response'
 import Language from '../models/language.model'
 
 export const getAllLanguages = async (req: Request, res: Response): Promise<void> => {
-  const response: IResponse<Language[]> = {
+  const response: IResponse<{ lang: string[] }> = {
     success: false,
   }
   try {
-    const languages = await findAllLangauges()
+    console.log('getAllLanguages')
+    // const languages = await findAllLangauges()
     response.success = true
-    response.data = languages
+    // response.data = languages
+    response.data = { lang: ['es', 'en'] }
     res.status(200).json(response)
   } catch (error) {
     console.log(error)
