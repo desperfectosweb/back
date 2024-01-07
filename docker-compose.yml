@@ -10,6 +10,16 @@ services:
     volumes:
       - .:/app
       - /app/node_modules # maintain node_modules when closing the container
+  desperfectosweb-mongodb:
+    image: mongo:6.0.3
+    ports:
+      - 27017:27017
+    volumes:
+      - desperfectosweb-mongodb-vol:/data/db
+
+volumes:
+  desperfectosweb-mongodb-vol:
+
 networks:
   default:
     name: desperfectosweb-network
