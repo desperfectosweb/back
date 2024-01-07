@@ -1,17 +1,22 @@
 import express from 'express'
-import dotenv from 'dotenv'
 import router from './routes/index.route'
 import { authenticationMiddleware } from './middlewares/authentication'
-dotenv.config()
+import { dbConnection } from './config/database'
+import ENV from './config/config.env'
+
+// Connect to MongoDB
+// dotenv.config()
 
 const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-const PORT = process.env.PORT || 8080
+const PORT = ENV.PORT || 8080
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
+
+dbConnection()
 
 app.use('/api', authenticationMiddleware, router)
