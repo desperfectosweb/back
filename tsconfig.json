@@ -8,9 +8,9 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "jest"]
   },
-  "include": ["src/**/*.ts"],
-  "typeRoots": ["./global.d.ts", "./node_modules/@types"],
+  "include": ["src/**/*.ts", "src/routes/authentication.route.ts"],
   "exclude": ["node_modules"]
 }
