@@ -1,8 +1,8 @@
-import User from '../models/user.model'
-import { createUser } from '../services/authentication.service'
-import { IUser } from '../types/user'
+import User from '../../models/user.model'
+import { createUser } from '../../services/authentication.service'
+import { IUser } from '../../types/user'
 
-jest.mock('../models/user.model')
+jest.mock('../../models/user.model')
 
 const mockUser: IUser = {
   email: 'test@test.com',

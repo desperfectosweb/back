@@ -9,7 +9,6 @@ export const register = async (req: Request, res: Response) => {
     success: false,
   }
   try {
-    console.log('register')
     const userData = req.body as IUser
 
     const response = await createUser(userData)
