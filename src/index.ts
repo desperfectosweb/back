@@ -1,6 +1,5 @@
 import express from 'express'
 import router from './routes/index.route'
-import { authenticationMiddleware } from './middlewares/authentication'
 import { dbConnection } from './config/database'
 import ENV from './config/config.env'
 
@@ -19,4 +18,4 @@ app.listen(PORT, () => {
 
 dbConnection()
 
-app.use('/api', authenticationMiddleware, router)
+app.use('/api', router)
