@@ -17,7 +17,6 @@ export const getAllLanguages = async (req: Request, res: Response): Promise<void
     if (error instanceof Error) {
       response.errorMessages = error.message
     }
-    response.status = 500
     res.status(500).json(response)
   }
 }
