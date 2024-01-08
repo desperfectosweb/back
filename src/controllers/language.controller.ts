@@ -1,7 +1,5 @@
 import { Request, Response } from 'express'
-import { findAllLangauges } from '../services/language.service'
 import { IResponse } from '../types/response'
-import Language from '../models/language.model'
 
 export const getAllLanguages = async (req: Request, res: Response): Promise<void> => {
   const response: IResponse<{ lang: string[] }> = {
