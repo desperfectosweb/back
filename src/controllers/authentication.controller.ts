@@ -49,7 +49,14 @@ export const login = async (req: Request, res: Response) => {
 
     // User is valid, create JWT
     const token = jwt.sign(
-      { userData: user.data },
+      {
+        userData: {
+          id: user.data._id,
+          email: user.data.email,
+          username: user.data.username,
+          role: user.data.role,
+        },
+      },
       ENV.JWT_SECRET,
       { expiresIn: '1d' }, // token expires in 1 day
     )

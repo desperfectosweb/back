@@ -1,11 +1,11 @@
 import * as express from 'express'
 
-import { IUser } from '../src/types/user'
+import { IUserSession } from '../src/types/user'
 
 declare global {
   namespace Express {
     interface Request {
-      userData?: IUser
+      userData?: IUserSession
     }
   }
 }
@@ -13,5 +13,5 @@ declare global {
 export interface UserPayload {
   iat: number // JWT issue timestamp
   exp: number // JWT expiration timestamp
-  userData: IUser
+  userData: IUserSession
 }
