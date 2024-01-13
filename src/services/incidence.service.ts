@@ -1,9 +1,16 @@
 import Incidence from '../models/incidence.model'
-import { IIncidence } from '../types/incidence'
+import { IIncidence, IIncidenceImage } from '../types/incidence'
 import { IResponse } from '../types/response'
 import { getErrorMessage } from '../utils/utils'
 
-export const createIncidence = async (incidenceData: IIncidence): Promise<IResponse<IIncidence>> => {
+export interface ICreateIncidence {
+  userId: string
+  location: number
+  basicDescription: string
+  assignedTo: string
+  images: IIncidenceImage[]
+}
+export const createIncidence = async (incidenceData: ICreateIncidence): Promise<IResponse<IIncidence>> => {
   try {
     // Create new incidence
     const newIncidence = new Incidence(incidenceData)

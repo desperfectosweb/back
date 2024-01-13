@@ -3,7 +3,7 @@ import { IIncidenceImage } from '../types/incidence'
 import { createIncidence } from '../services/incidence.service'
 import { getErrorMessage } from '../utils/utils'
 
-interface ICreateNewIncidenceBody {
+export interface ICreateNewIncidenceBody {
   location: number
   basicDescription: string
   assignedTo: string
@@ -23,8 +23,10 @@ export const createNewIncidence = async (req: Request, res: Response) => {
       basicDescription,
       assignedTo,
       images,
-      userId: req.userData?.userData._id,
+      userId: req.userData?.id as string,
     })
+    if (!response.success) return res.status(response.status ?? 500).json(response)
+
     res.status(response.status ?? 201).json(response)
   } catch (error) {
     const errorMessage = getErrorMessage(error, 'Error creating incidence')
