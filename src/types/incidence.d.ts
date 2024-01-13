@@ -9,10 +9,10 @@ export interface IIncidence {
       comment: string
     },
   ]
-  images: [
-    {
-      uri: string
-      format: string
-    },
-  ]
+  images: IIncidenceImage[]
+}
+
+export interface IIncidenceImage {
+  uri: string
+  format: string
 }

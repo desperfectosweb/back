@@ -12,6 +12,7 @@
   },
   "plugins": ["standard", "promise", "import", "node"],
   "rules": {
-    "comma-dangle": ["error", "always-multiline"]
+    "comma-dangle": ["error", "always-multiline"],
+    "no-use-before-define": "off"
   }
 }
