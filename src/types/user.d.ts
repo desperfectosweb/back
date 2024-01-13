@@ -5,3 +5,10 @@ export interface IUser {
   role: number
   internalUser: boolean
 }
+
+export interface IUserSession {
+  id: string
+  email: string
+  username: string
+  role: number
+}

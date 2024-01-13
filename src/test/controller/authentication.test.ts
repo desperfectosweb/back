@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import httpMocks, { MockRequest, MockResponse } from 'node-mocks-http'
-import jwt from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken'
 import { IUser } from '../../types/user'
 import { IResponse } from '../../types/response'
 import { getErrorMessage } from '../../utils/utils'
@@ -9,7 +9,10 @@ import { login, register } from '../../controllers/authentication.controller'
 
 jest.mock('../../services/authentication.service')
 jest.mock('../../utils/utils')
-jest.mock('jsonwebtoken')
+
+jest.mock('jsonwebtoken', () => ({
+  sign: jest.fn(),
+}))
 
 describe('register', () => {
   let req: MockRequest<Request>, res: MockResponse<Response>
@@ -140,7 +143,6 @@ describe('login', () => {
     const mockUser = { data: { comparePassword: jest.fn().mockResolvedValue(true) }, success: true }
     ;(getUserByEmail as jest.Mock).mockResolvedValue(mockUser)
     ;(jwt.sign as jest.Mock).mockReturnValue('token')
-
     await login(req, res)
 
     expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ token: 'token' }))

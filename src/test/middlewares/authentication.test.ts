@@ -2,7 +2,9 @@ import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import verifyToken from '../../middlewares/authentication'
 
-jest.mock('jsonwebtoken')
+jest.mock('jsonwebtoken', () => ({
+  verify: jest.fn(),
+}))
 
 const mockRequest = (token: string) => {
   return {
