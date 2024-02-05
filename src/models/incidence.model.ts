@@ -8,17 +8,8 @@ const IncidenceSchema: Schema = new mongoose.Schema(
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     assignedTo: { type: Schema.Types.ObjectId, ref: 'User', required: false },
     status: { type: Number, required: true },
-    comments: [
-      {
-        comment: { type: String, required: true },
-      },
-    ],
-    images: [
-      {
-        uri: { type: String, required: true },
-        format: { type: String, required: true },
-      },
-    ],
+    comments: { type: [String], required: false },
+    images: { type: [String], required: false },
   },
   {
     timestamps: true,
