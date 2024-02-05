@@ -5,7 +5,7 @@ export interface IIncidenceSchema extends IIncidence, Document {}
 
 const IncidenceSchema: Schema = new mongoose.Schema(
   {
-    location: { type: Number, required: true },
+    incidenceLocation: { type: Number, required: true },
     basicDescription: { type: String, required: true },
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     assignedTo: { type: Schema.Types.ObjectId, ref: 'User', required: false },
