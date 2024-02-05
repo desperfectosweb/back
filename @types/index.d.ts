@@ -5,7 +5,7 @@ import { IUserSession } from '../src/types/user'
 declare global {
   namespace Express {
     interface Request {
-      userData?: IUserSession
+      userData: IUserSession
     }
   }
 }
