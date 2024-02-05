@@ -7,23 +7,23 @@ export interface ICreateNewIncidenceBody {
   location: number
   basicDescription: string
   assignedTo: string
-  images: IIncidenceImage[]
+  images?: IIncidenceImage[]
 }
 export const createNewIncidence = async (req: Request, res: Response) => {
   try {
     const { location, basicDescription, assignedTo, images } = req.body as ICreateNewIncidenceBody
 
     // Validate required fields
-    if (!location || !basicDescription! || !assignedTo || !images) {
+    if (!location || !basicDescription! || !assignedTo) {
       return res.status(400).json({ success: false, errorMessages: 'Missing required fields' })
     }
 
     const response = await createIncidence({
       location,
       basicDescription,
-      assignedTo,
+      userId: req.userData.id,
+      assignedTo: assignedTo,
       images,
-      userId: req.userData?.id as string,
     })
     if (!response.success) return res.status(response.status ?? 500).json(response)
 

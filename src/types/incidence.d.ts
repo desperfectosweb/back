@@ -4,12 +4,12 @@ export interface IIncidence {
   userId: string
   assignedTo: string
   status: number
-  comments: [
+  comments?: [
     {
       comment: string
     },
   ]
-  images: IIncidenceImage[]
+  images?: IIncidenceImage[]
 }
 
 export interface IIncidenceImage {

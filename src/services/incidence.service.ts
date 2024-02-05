@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import Incidence from '../models/incidence.model'
 import { IIncidence, IIncidenceImage } from '../types/incidence'
 import { IResponse } from '../types/response'
@@ -8,12 +9,34 @@ export interface ICreateIncidence {
   location: number
   basicDescription: string
   assignedTo: string
-  images: IIncidenceImage[]
+  images?: IIncidenceImage[]
 }
 export const createIncidence = async (incidenceData: ICreateIncidence): Promise<IResponse<IIncidence>> => {
   try {
+    console.log('Creating incidence', incidenceData)
+    // Check if the incidence already exists
+    const incidenceExists = await Incidence.findOne({
+      location: incidenceData.location,
+      basicDescription: incidenceData.basicDescription,
+      userId: incidenceData.userId,
+      assignedTo: incidenceData.assignedTo,
+    })
+    if (incidenceExists) {
+      return {
+        success: false,
+        status: 400,
+        errorMessages: 'Incidence already exists',
+      }
+    }
     // Create new incidence
-    const newIncidence = new Incidence(incidenceData)
+    const newIncidence = new Incidence({
+      location: incidenceData.location,
+      basicDescription: incidenceData.basicDescription,
+      userId: incidenceData.userId,
+      assignedTo: incidenceData.assignedTo,
+      images: incidenceData.images,
+      status: 0,
+    })
 
     // Save and return the incidence
     const savedIncidence = await newIncidence.save()
