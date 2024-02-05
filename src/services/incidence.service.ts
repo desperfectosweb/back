@@ -6,17 +6,17 @@ import { getErrorMessage } from '../utils/utils'
 
 export interface ICreateIncidence {
   userId: string
-  location: number
+  incidenceLocation: number
   basicDescription: string
   assignedTo: string
-  images?: IIncidenceImage[]
+  incidenceImages?: IIncidenceImage[]
 }
 export const createIncidence = async (incidenceData: ICreateIncidence): Promise<IResponse<IIncidence>> => {
   try {
     console.log('Creating incidence', incidenceData)
     // Check if the incidence already exists
     const incidenceExists = await Incidence.findOne({
-      location: incidenceData.location,
+      incidenceLocation: incidenceData.incidenceLocation,
       basicDescription: incidenceData.basicDescription,
       userId: incidenceData.userId,
       assignedTo: incidenceData.assignedTo,
@@ -30,11 +30,11 @@ export const createIncidence = async (incidenceData: ICreateIncidence): Promise<
     }
     // Create new incidence
     const newIncidence = new Incidence({
-      location: incidenceData.location,
+      incidenceLocation: incidenceData.incidenceLocation,
       basicDescription: incidenceData.basicDescription,
       userId: incidenceData.userId,
       assignedTo: incidenceData.assignedTo,
-      images: incidenceData.images,
+      incidenceImages: incidenceData.incidenceImages,
       status: 0,
     })
 
@@ -56,7 +56,8 @@ export const createIncidence = async (incidenceData: ICreateIncidence): Promise<
   }
 }
 
-export const getAllIncidences = async (): Promise<IResponse<IIncidence[]>> => {
+// TODO: Implement params to filter incidences
+export const getIncidences = async (): Promise<IResponse<IIncidence[]>> => {
   try {
     const incidences = await Incidence.find()
     return {
