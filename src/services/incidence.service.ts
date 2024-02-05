@@ -55,3 +55,22 @@ export const createIncidence = async (incidenceData: ICreateIncidence): Promise<
     }
   }
 }
+
+export const getAllIncidences = async (): Promise<IResponse<IIncidence[]>> => {
+  try {
+    const incidences = await Incidence.find()
+    return {
+      success: true,
+      status: 200,
+      data: incidences,
+    }
+  } catch (error) {
+    const errorMessage = getErrorMessage(error, 'Error getting incidences')
+    console.error(errorMessage)
+    return {
+      success: false,
+      status: 500,
+      errorMessages: errorMessage,
+    }
+  }
+}

@@ -5,6 +5,6 @@ import { isAdminUser } from '../middlewares/authentication'
 const incidenceRouter = express.Router()
 
 incidenceRouter.post('/', createNewIncidence)
-incidenceRouter.post('/', isAdminUser, getHallIncidences)
+incidenceRouter.get('/', isAdminUser, getHallIncidences)
 
 export default incidenceRouter

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { IIncidenceImage } from '../types/incidence'
-import { createIncidence } from '../services/incidence.service'
+import { createIncidence, getAllIncidences } from '../services/incidence.service'
 import { getErrorMessage } from '../utils/utils'
 
 export interface ICreateNewIncidenceBody {
@@ -27,7 +27,7 @@ export const createNewIncidence = async (req: Request, res: Response) => {
     })
     if (!response.success) return res.status(response.status ?? 500).json(response)
 
-    res.status(response.status ?? 201).json(response)
+    res.status(response.status ?? 201).json({ success: true, data: response })
   } catch (error) {
     const errorMessage = getErrorMessage(error, 'Error creating incidence')
     console.error(errorMessage)
@@ -35,4 +35,16 @@ export const createNewIncidence = async (req: Request, res: Response) => {
   }
 }
 
-export const getHallIncidences = async (req: Request, res: Response) => {}
+export const getHallIncidences = async (req: Request, res: Response) => {
+  try {
+    const incidences = await getAllIncidences()
+
+    if (!incidences.success) return res.status(incidences.status ?? 500).json(incidences)
+
+    return res.status(200).json({ success: true, data: incidences })
+  } catch (error) {
+    const errorMessage = getErrorMessage(error, 'Error fetching incidences')
+    console.error(errorMessage)
+    res.status(500).json({ success: false, errorMessages: errorMessage })
+  }
+}
