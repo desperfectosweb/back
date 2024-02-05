@@ -1,29 +1,29 @@
 import { Request, Response } from 'express'
 import { IIncidenceImage } from '../types/incidence'
-import { createIncidence, getAllIncidences } from '../services/incidence.service'
+import { createIncidence, getIncidences } from '../services/incidence.service'
 import { getErrorMessage } from '../utils/utils'
 
 export interface ICreateNewIncidenceBody {
-  location: number
+  incidenceLocation: number
   basicDescription: string
   assignedTo: string
-  images?: IIncidenceImage[]
+  incidenceImages?: IIncidenceImage[]
 }
 export const createNewIncidence = async (req: Request, res: Response) => {
   try {
-    const { location, basicDescription, assignedTo, images } = req.body as ICreateNewIncidenceBody
+    const { incidenceLocation, basicDescription, assignedTo, incidenceImages } = req.body as ICreateNewIncidenceBody
 
     // Validate required fields
-    if (!location || !basicDescription! || !assignedTo) {
+    if (!incidenceLocation || !basicDescription! || !assignedTo) {
       return res.status(400).json({ success: false, errorMessages: 'Missing required fields' })
     }
 
     const response = await createIncidence({
-      location,
+      incidenceLocation,
       basicDescription,
       userId: req.userData.id,
       assignedTo: assignedTo,
-      images,
+      incidenceImages,
     })
     if (!response.success) return res.status(response.status ?? 500).json({ success: true, data: response })
 
@@ -35,9 +35,9 @@ export const createNewIncidence = async (req: Request, res: Response) => {
   }
 }
 
-export const getHallIncidences = async (req: Request, res: Response) => {
+export const getAllIncidences = async (req: Request, res: Response) => {
   try {
-    const incidences = await getAllIncidences()
+    const incidences = await getIncidences()
 
     if (!incidences.success) return res.status(incidences.status ?? 500).json(incidences)
 
