@@ -34,3 +34,5 @@ export const createNewIncidence = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, errorMessages: errorMessage })
   }
 }
+
+export const getHallIncidences = async (req: Request, res: Response) => {}
