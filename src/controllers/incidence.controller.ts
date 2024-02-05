@@ -25,7 +25,7 @@ export const createNewIncidence = async (req: Request, res: Response) => {
       assignedTo: assignedTo,
       images,
     })
-    if (!response.success) return res.status(response.status ?? 500).json(response)
+    if (!response.success) return res.status(response.status ?? 500).json({ success: true, data: response })
 
     res.status(response.status ?? 201).json(response)
   } catch (error) {
