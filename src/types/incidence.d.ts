@@ -1,5 +1,5 @@
 export interface IIncidence {
-  location: number
+  incidenceLocation: number
   basicDescription: string
   userId: string
   assignedTo: string
@@ -9,7 +9,7 @@ export interface IIncidence {
       comment: string
     },
   ]
-  images?: IIncidenceImage[]
+  incidenceImages?: IIncidenceImage[]
 }
 
 export interface IIncidenceImage {

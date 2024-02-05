@@ -1,6 +1,8 @@
 import mongoose, { Schema } from 'mongoose'
 import { IIncidence } from '../types/incidence'
 
+export interface IIncidenceSchema extends IIncidence, Document {}
+
 const IncidenceSchema: Schema = new mongoose.Schema(
   {
     location: { type: Number, required: true },
@@ -9,12 +11,20 @@ const IncidenceSchema: Schema = new mongoose.Schema(
     assignedTo: { type: Schema.Types.ObjectId, ref: 'User', required: false },
     status: { type: Number, required: true },
     comments: { type: [String], required: false },
-    images: { type: [String], required: false },
+    incidenceImages: {
+      type: [{ uri: { type: String, required: true }, format: { type: String, required: true } }],
+      required: false,
+    },
   },
   {
     timestamps: true,
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret.__v
+      },
+    },
   },
 )
 
-const Incidence = mongoose.model<IIncidence>('Incidence', IncidenceSchema)
+const Incidence = mongoose.model<IIncidenceSchema>('Incidence', IncidenceSchema)
 export default Incidence
