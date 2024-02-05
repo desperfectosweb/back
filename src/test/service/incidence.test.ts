@@ -1,11 +1,12 @@
 import Incidence from '../../models/incidence.model'
-import { createIncidence } from '../../services/incidence.service'
+import { createIncidence, getIncidences } from '../../services/incidence.service'
 import { IIncidence } from '../../types/incidence'
+import { getErrorMessage } from '../../utils/utils'
 
 jest.mock('../../models/incidence.model')
 
 const mockIncidence: IIncidence = {
-  location: 1,
+  incidenceLocation: 1,
   basicDescription: 'Incidence description',
   userId: 'test',
   assignedTo: 'test@test.com',
@@ -35,6 +36,35 @@ describe('createIncidence', () => {
       success: false,
       status: 400,
       errorMessages: 'Incidence already exists',
+    })
+  })
+})
+
+describe('getIncidences', () => {
+  test('should return 200 status and all incidences for successful request', async () => {
+    const incidences = [
+      {
+        _id: '65c13a60ff40cd5a38086d23',
+        location: 23,
+        basicDescription: 'test description',
+        userId: '65c1341d7ae46e374ed87b39',
+        assignedTo: '65c13a4f55870badc0ed59d8',
+        status: 0,
+        comments: [],
+        images: [],
+        createdAt: '2024-02-05T19:43:28.699Z',
+        updatedAt: '2024-02-05T19:43:28.699Z',
+      },
+    ]
+
+    ;(Incidence.find as jest.Mock).mockResolvedValue(incidences)
+
+    const response = await getIncidences()
+
+    expect(response).toEqual({
+      success: true,
+      status: 200,
+      data: incidences,
     })
   })
 })
