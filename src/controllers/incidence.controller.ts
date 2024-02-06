@@ -66,7 +66,6 @@ export const getAllIncidences = async (req: Request, res: Response) => {
 
 export const updateIncidence = async (req: Request, res: Response) => {
   try {
-    console.log('updateIncidence -> req.userData', req.userData)
     const incidenceId = req.params.id
     const incidence = await getIncidenceById(incidenceId)
 
@@ -75,8 +74,8 @@ export const updateIncidence = async (req: Request, res: Response) => {
     }
 
     if (
-      (req.userData.role === 0 && incidence.data.userId !== req.userData.id) || // Default user can only update their own incidences
-      (req.userData.role === 1 && incidence.data.assignedTo !== req.userData.id) // Town hall user can only update incidences assigned to them
+      (req.userData.role === 0 && incidence.data.userId.toString() !== req.userData.id) || // Default user can only update their own incidences
+      (req.userData.role === 1 && incidence.data.assignedTo.toString() !== req.userData.id) // Town hall user can only update incidences assigned to them
     ) {
       return res.status(403).json({ success: false, errorMessages: 'You are not authorized to update this incidence' })
     }
