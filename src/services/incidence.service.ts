@@ -55,6 +55,32 @@ export const createIncidence = async (incidenceData: ICreateIncidence): Promise<
   }
 }
 
+export const getIncidenceById = async (incidenceId: string): Promise<IResponse<IIncidence>> => {
+  try {
+    const incidence = await Incidence.findById(incidenceId)
+    if (!incidence) {
+      return {
+        success: false,
+        status: 404,
+        errorMessages: 'Incidence not found',
+      }
+    }
+    return {
+      success: true,
+      status: 200,
+      data: incidence,
+    }
+  } catch (error) {
+    const errorMessage = getErrorMessage(error, 'Error getting incidence')
+    console.error(errorMessage)
+    return {
+      success: false,
+      status: 500,
+      errorMessages: errorMessage,
+    }
+  }
+}
+
 // TODO: Implement params to filter incidences
 export const getIncidences = async (): Promise<IResponse<IIncidence[]>> => {
   try {

@@ -1,7 +1,6 @@
 import Incidence from '../../models/incidence.model'
 import { createIncidence, getIncidences } from '../../services/incidence.service'
 import { IIncidence } from '../../types/incidence'
-import { getErrorMessage } from '../../utils/utils'
 
 jest.mock('../../models/incidence.model')
 

@@ -3,9 +3,6 @@ import router from './routes/index.route'
 import { dbConnection } from './config/database'
 import ENV from './config/config.env'
 
-// Connect to MongoDB
-// dotenv.config()
-
 const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
