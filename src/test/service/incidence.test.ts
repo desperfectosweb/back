@@ -1,6 +1,7 @@
 import Incidence from '../../models/incidence.model'
-import { createIncidence, getIncidences } from '../../services/incidence.service'
+import { createIncidence, getIncidenceById, getIncidences } from '../../services/incidence.service'
 import { IIncidence } from '../../types/incidence'
+import { getErrorMessage } from '../../utils/utils'
 
 jest.mock('../../models/incidence.model')
 
@@ -64,6 +65,36 @@ describe('getIncidences', () => {
       success: true,
       status: 200,
       data: incidences,
+    })
+  })
+})
+
+describe('getIncidenceById', () => {
+  test('should return 200 status and the incidence for successful request', async () => {
+    const incidence = {
+      // Aquí puedes poner algunos datos de incidencia de muestra
+    }
+
+    ;(Incidence.findById as jest.Mock).mockResolvedValue(incidence)
+
+    const response = await getIncidenceById('1')
+
+    expect(response).toEqual({
+      success: true,
+      status: 200,
+      data: incidence,
+    })
+  })
+
+  test('should return 404 status when incidence is not found', async () => {
+    ;(Incidence.findById as jest.Mock).mockResolvedValue(null)
+
+    const response = await getIncidenceById('1')
+
+    expect(response).toEqual({
+      success: false,
+      status: 404,
+      errorMessages: 'Incidence not found',
     })
   })
 })

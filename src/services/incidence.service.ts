@@ -12,7 +12,6 @@ export interface ICreateIncidence {
 }
 export const createIncidence = async (incidenceData: ICreateIncidence): Promise<IResponse<IIncidence>> => {
   try {
-    console.log('Creating incidence', incidenceData)
     // Check if the incidence already exists
     const incidenceExists = await Incidence.findOne({
       incidenceLocation: incidenceData.incidenceLocation,
