@@ -22,7 +22,7 @@ export const createNewIncidence = async (req: Request, res: Response) => {
       incidenceLocation,
       basicDescription,
       userId: req.userData.id,
-      assignedTo: assignedTo,
+      assignedTo,
       incidenceImages,
     })
     if (!response.success) return res.status(response.status ?? 500).json({ success: true, data: response })

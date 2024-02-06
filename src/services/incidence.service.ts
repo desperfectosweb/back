@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import Incidence from '../models/incidence.model'
 import { IIncidence, IIncidenceImage } from '../types/incidence'
 import { IResponse } from '../types/response'
