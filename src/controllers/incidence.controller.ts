@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { IIncidenceImage } from '../types/incidence'
-import { createIncidence, getIncidenceById, getIncidences } from '../services/incidence.service'
+import { createIncidence, getIncidenceById, getIncidences, updateIncidenceById } from '../services/incidence.service'
 import { getErrorMessage } from '../utils/utils'
 
 export interface ICreateNewIncidenceBody {
@@ -59,6 +59,36 @@ export const getAllIncidences = async (req: Request, res: Response) => {
     return res.status(200).json({ success: true, data: incidences })
   } catch (error) {
     const errorMessage = getErrorMessage(error, 'Error fetching incidences')
+    console.error(errorMessage)
+    res.status(500).json({ success: false, errorMessages: errorMessage })
+  }
+}
+
+export const updateIncidence = async (req: Request, res: Response) => {
+  try {
+    console.log('updateIncidence -> req.userData', req.userData)
+    const incidenceId = req.params.id
+    const incidence = await getIncidenceById(incidenceId)
+
+    if (!incidence.success || !incidence.data) {
+      return res.status(incidence.status ?? 500).json({ success: false, data: incidence })
+    }
+
+    if (
+      (req.userData.role === 0 && incidence.data.userId !== req.userData.id) || // Default user can only update their own incidences
+      (req.userData.role === 1 && incidence.data.assignedTo !== req.userData.id) // Town hall user can only update incidences assigned to them
+    ) {
+      return res.status(403).json({ success: false, errorMessages: 'You are not authorized to update this incidence' })
+    }
+
+    const updatedIncidence = await updateIncidenceById(incidenceId, req.body)
+
+    if (!updatedIncidence.success) {
+      return res.status(updatedIncidence.status ?? 500).json({ success: false, data: updatedIncidence })
+    }
+    return res.status(200).json({ success: true, data: incidence })
+  } catch (error) {
+    const errorMessage = getErrorMessage(error, 'Error fetching incidence')
     console.error(errorMessage)
     res.status(500).json({ success: false, errorMessages: errorMessage })
   }

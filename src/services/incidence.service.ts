@@ -99,3 +99,32 @@ export const getIncidences = async (): Promise<IResponse<IIncidence[]>> => {
     }
   }
 }
+
+export const updateIncidenceById = async (
+  incidenceId: string,
+  incidenceData: Partial<IIncidence>,
+): Promise<IResponse<IIncidence>> => {
+  try {
+    const incidence = await Incidence.findByIdAndUpdate(incidenceId, incidenceData, { new: true })
+    if (!incidence) {
+      return {
+        success: false,
+        status: 404,
+        errorMessages: 'Incidence not found',
+      }
+    }
+    return {
+      success: true,
+      status: 200,
+      data: incidence,
+    }
+  } catch (error) {
+    const errorMessage = getErrorMessage(error, 'Error updating incidence')
+    console.error(errorMessage)
+    return {
+      success: false,
+      status: 500,
+      errorMessages: errorMessage,
+    }
+  }
+}
