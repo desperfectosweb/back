@@ -26,7 +26,7 @@ const IncidenceSchema: Schema = new mongoose.Schema(
     status: { type: Number, required: true },
     comments: { type: [String], required: false },
     incidenceImages: {
-      type: [{ uri: { type: String, required: true }, format: { type: String, required: true } }],
+      type: [{ uri: { type: String, required: false }, name: { type: String, required: false }, format: { type: String, required: true }, imageBase64: { type: String, required: true } }],
       required: false,
     },
   },

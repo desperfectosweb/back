@@ -1,9 +1,25 @@
 import Incidence from '../../models/incidence.model'
 import { createIncidence, getIncidenceById, getIncidences } from '../../services/incidence.service'
+import { IIncidenceImage } from '../../types/IIncidenceImage'
 import { IIncidence } from '../../types/incidence'
-import { getErrorMessage } from '../../utils/utils'
+//import { getErrorMessage } from '../../utils/utils'
 
 jest.mock('../../models/incidence.model')
+
+const imagesMock: IIncidenceImage[] = [
+  {
+    uri: "uri",
+    name: "name",
+    format: "jpg",
+    imageBase64: "asdñlkjaslñalfjj"
+  },
+  {
+    uri: "uri2",
+    name: "name2",
+    format: "jpg",
+    imageBase64: "asdñlkjaslñalfjj"
+  }
+]
 
 const mockIncidence: IIncidence = {
   incidenceLocation: {
@@ -17,6 +33,7 @@ const mockIncidence: IIncidence = {
   userId: 'test',
   assignedTo: 'test@test.com',
   status: 0,
+  incidenceImages: imagesMock
 }
 
 describe('createIncidence', () => {

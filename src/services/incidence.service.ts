@@ -1,5 +1,6 @@
 import Incidence from '../models/incidence.model'
-import { IIncidence, IIncidenceImage } from '../types/incidence'
+import { IIncidence } from '../types/incidence'
+import { IIncidenceImage } from "../types/IIncidenceImage"
 import { ILocation } from '../types/location'
 import { IResponse } from '../types/response'
 import { getErrorMessage } from '../utils/utils'

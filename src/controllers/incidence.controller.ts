@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { IIncidenceImage } from '../types/incidence'
+import { IIncidenceImage } from "../types/IIncidenceImage"
 import { createIncidence, getIncidenceById, getIncidences, updateIncidenceById } from '../services/incidence.service'
 import { getErrorMessage } from '../utils/utils'
 import { ILocation } from '../types/location'
