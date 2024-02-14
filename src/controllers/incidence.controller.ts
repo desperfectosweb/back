@@ -2,19 +2,21 @@ import { Request, Response } from 'express'
 import { IIncidenceImage } from '../types/incidence'
 import { createIncidence, getIncidenceById, getIncidences, updateIncidenceById } from '../services/incidence.service'
 import { getErrorMessage } from '../utils/utils'
+import { ILocation } from '../types/location'
 
 export interface ICreateNewIncidenceBody {
-  incidenceLocation: number
+  incidenceLocation: ILocation
   basicDescription: string
   assignedTo: string
   incidenceImages?: IIncidenceImage[]
 }
+
 export const createNewIncidence = async (req: Request, res: Response) => {
   try {
     const { incidenceLocation, basicDescription, assignedTo, incidenceImages } = req.body as ICreateNewIncidenceBody
 
     // Validate required fields
-    if (!incidenceLocation || !basicDescription! || !assignedTo) {
+    if (!incidenceLocation || !basicDescription || !assignedTo) {
       return res.status(400).json({ success: false, errorMessages: 'Missing required fields' })
     }
 

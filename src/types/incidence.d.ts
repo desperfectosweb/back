@@ -1,5 +1,7 @@
+import { ILocation } from "./location"
+
 export interface IIncidence {
-  incidenceLocation: number
+  incidenceLocation: ILocation
   basicDescription: string
   userId: string
   assignedTo: string

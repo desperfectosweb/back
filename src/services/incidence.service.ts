@@ -1,11 +1,12 @@
 import Incidence from '../models/incidence.model'
 import { IIncidence, IIncidenceImage } from '../types/incidence'
+import { ILocation } from '../types/location'
 import { IResponse } from '../types/response'
 import { getErrorMessage } from '../utils/utils'
 
 export interface ICreateIncidence {
   userId: string
-  incidenceLocation: number
+  incidenceLocation: ILocation
   basicDescription: string
   assignedTo: string
   incidenceImages?: IIncidenceImage[]
@@ -19,6 +20,7 @@ export const createIncidence = async (incidenceData: ICreateIncidence): Promise<
       userId: incidenceData.userId,
       assignedTo: incidenceData.assignedTo,
     })
+
     if (incidenceExists) {
       return {
         success: false,
