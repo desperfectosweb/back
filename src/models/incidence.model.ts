@@ -7,7 +7,7 @@ const locationSchema = new Schema<ILocation>({
   name: { type: String, required: true },
   latitude: { type: Number, required: true },
   longitude: { type: Number, required: true },
-  address: { type: String, required: true },
+  address: { type: String, required: false },
   typeList: {
     type: [{ locationType: { type: String, required: false } }],
     required: false
