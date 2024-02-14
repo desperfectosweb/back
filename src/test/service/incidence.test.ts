@@ -6,7 +6,13 @@ import { getErrorMessage } from '../../utils/utils'
 jest.mock('../../models/incidence.model')
 
 const mockIncidence: IIncidence = {
-  incidenceLocation: 1,
+  incidenceLocation: {
+    placeId: 'test',
+    name: 'testName',
+    address: 'testAddress',
+    latitude: 0,
+    longitude: 0,
+  },
   basicDescription: 'Incidence description',
   userId: 'test',
   assignedTo: 'test@test.com',
@@ -15,8 +21,8 @@ const mockIncidence: IIncidence = {
 
 describe('createIncidence', () => {
   it('should create a new incidence', async () => {
-    ;(Incidence.findOne as jest.Mock).mockResolvedValue(null)
-    ;(Incidence.prototype.save as jest.Mock).mockResolvedValue(mockIncidence)
+    ; (Incidence.findOne as jest.Mock).mockResolvedValue(null)
+      ; (Incidence.prototype.save as jest.Mock).mockResolvedValue(mockIncidence)
 
     const result = await createIncidence(mockIncidence)
 
@@ -28,7 +34,7 @@ describe('createIncidence', () => {
   })
 
   it('should return an error if the incidence already exists', async () => {
-    ;(Incidence.findOne as jest.Mock).mockResolvedValue(mockIncidence)
+    ; (Incidence.findOne as jest.Mock).mockResolvedValue(mockIncidence)
 
     const result = await createIncidence(mockIncidence)
 
@@ -57,7 +63,7 @@ describe('getIncidences', () => {
       },
     ]
 
-    ;(Incidence.find as jest.Mock).mockResolvedValue(incidences)
+      ; (Incidence.find as jest.Mock).mockResolvedValue(incidences)
 
     const response = await getIncidences()
 
@@ -75,7 +81,7 @@ describe('getIncidenceById', () => {
       // Aquí puedes poner algunos datos de incidencia de muestra
     }
 
-    ;(Incidence.findById as jest.Mock).mockResolvedValue(incidence)
+      ; (Incidence.findById as jest.Mock).mockResolvedValue(incidence)
 
     const response = await getIncidenceById('1')
 
@@ -87,7 +93,7 @@ describe('getIncidenceById', () => {
   })
 
   test('should return 404 status when incidence is not found', async () => {
-    ;(Incidence.findById as jest.Mock).mockResolvedValue(null)
+    ; (Incidence.findById as jest.Mock).mockResolvedValue(null)
 
     const response = await getIncidenceById('1')
 
