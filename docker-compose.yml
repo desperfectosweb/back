@@ -20,7 +20,8 @@ services:
 volumes:
   desperfectosweb-mongodb-vol:
 
+
 networks:
   default:
     name: desperfectosweb-network
-    external: true
+    # external: true
