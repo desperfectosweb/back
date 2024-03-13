@@ -1,5 +1,8 @@
+import { IIncidenceImage } from "./IIncidenceImage"
+import { ILocation } from "./location"
+
 export interface IIncidence {
-  location: number
+  incidenceLocation: ILocation
   basicDescription: string
   userId: string
   assignedTo: string
@@ -9,10 +12,7 @@ export interface IIncidence {
       comment: string
     },
   ]
-  images?: IIncidenceImage[]
+  incidenceImages?: IIncidenceImage[]
 }
 
-export interface IIncidenceImage {
-  uri: string
-  format: string
-}
+

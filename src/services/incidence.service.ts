@@ -1,26 +1,27 @@
-import mongoose from 'mongoose'
 import Incidence from '../models/incidence.model'
-import { IIncidence, IIncidenceImage } from '../types/incidence'
+import { IIncidence } from '../types/incidence'
+import { IIncidenceImage } from "../types/IIncidenceImage"
+import { ILocation } from '../types/location'
 import { IResponse } from '../types/response'
 import { getErrorMessage } from '../utils/utils'
 
 export interface ICreateIncidence {
   userId: string
-  location: number
+  incidenceLocation: ILocation
   basicDescription: string
   assignedTo: string
-  images?: IIncidenceImage[]
+  incidenceImages?: IIncidenceImage[]
 }
 export const createIncidence = async (incidenceData: ICreateIncidence): Promise<IResponse<IIncidence>> => {
   try {
-    console.log('Creating incidence', incidenceData)
     // Check if the incidence already exists
     const incidenceExists = await Incidence.findOne({
-      location: incidenceData.location,
+      incidenceLocation: incidenceData.incidenceLocation,
       basicDescription: incidenceData.basicDescription,
       userId: incidenceData.userId,
       assignedTo: incidenceData.assignedTo,
     })
+
     if (incidenceExists) {
       return {
         success: false,
@@ -30,11 +31,11 @@ export const createIncidence = async (incidenceData: ICreateIncidence): Promise<
     }
     // Create new incidence
     const newIncidence = new Incidence({
-      location: incidenceData.location,
+      incidenceLocation: incidenceData.incidenceLocation,
       basicDescription: incidenceData.basicDescription,
       userId: incidenceData.userId,
       assignedTo: incidenceData.assignedTo,
-      images: incidenceData.images,
+      incidenceImages: incidenceData.incidenceImages,
       status: 0,
     })
 
@@ -47,6 +48,81 @@ export const createIncidence = async (incidenceData: ICreateIncidence): Promise<
     }
   } catch (error) {
     const errorMessage = getErrorMessage(error, 'Error creating incidence')
+    console.error(errorMessage)
+    return {
+      success: false,
+      status: 500,
+      errorMessages: errorMessage,
+    }
+  }
+}
+
+export const getIncidenceById = async (incidenceId: string): Promise<IResponse<IIncidence>> => {
+  try {
+    const incidence = await Incidence.findById(incidenceId)
+    if (!incidence) {
+      return {
+        success: false,
+        status: 404,
+        errorMessages: 'Incidence not found',
+      }
+    }
+    return {
+      success: true,
+      status: 200,
+      data: incidence,
+    }
+  } catch (error) {
+    const errorMessage = getErrorMessage(error, 'Error getting incidence')
+    console.error(errorMessage)
+    return {
+      success: false,
+      status: 500,
+      errorMessages: errorMessage,
+    }
+  }
+}
+
+// TODO: Implement params to filter incidences
+export const getIncidences = async (): Promise<IResponse<IIncidence[]>> => {
+  try {
+    const incidences = await Incidence.find()
+    return {
+      success: true,
+      status: 200,
+      data: incidences,
+    }
+  } catch (error) {
+    const errorMessage = getErrorMessage(error, 'Error getting incidences')
+    console.error(errorMessage)
+    return {
+      success: false,
+      status: 500,
+      errorMessages: errorMessage,
+    }
+  }
+}
+
+export const updateIncidenceById = async (
+  incidenceId: string,
+  incidenceData: Partial<IIncidence>,
+): Promise<IResponse<IIncidence>> => {
+  try {
+    const incidence = await Incidence.findByIdAndUpdate(incidenceId, incidenceData, { new: true })
+    if (!incidence) {
+      return {
+        success: false,
+        status: 404,
+        errorMessages: 'Incidence not found',
+      }
+    }
+    return {
+      success: true,
+      status: 200,
+      data: incidence,
+    }
+  } catch (error) {
+    const errorMessage = getErrorMessage(error, 'Error updating incidence')
     console.error(errorMessage)
     return {
       success: false,

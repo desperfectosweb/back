@@ -3,7 +3,7 @@ import { RequestHandler } from 'express'
 import { UserPayload } from '../../@types/index.d'
 import ENV from '../config/config.env'
 
-const verifyToken: RequestHandler = (req, res, next) => {
+export const verifyToken: RequestHandler = (req, res, next) => {
   // Get the token from the 'Authorization' header
   const authHeader = req.headers.authorization
   const token = authHeader && authHeader.split(' ')[1]
@@ -26,4 +26,9 @@ const verifyToken: RequestHandler = (req, res, next) => {
   }
 }
 
-export default verifyToken
+export const isAdminUser: RequestHandler = (req, res, next) => {
+  if (req.userData.role !== 3) {
+    return res.status(403).json({ success: false, errorMessages: 'Access denied.' })
+  }
+  next()
+}
