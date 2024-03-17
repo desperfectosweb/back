@@ -2,8 +2,9 @@
   "name": "desperfectosweb_back",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "public/index.js",
   "scripts": {
+    "start": "node public/index.js",
     "test": "jest",
     "build": "tsc",
     "dev": "ts-node-dev ./src/index.ts",
