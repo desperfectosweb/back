@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "name": "desperfectosweb_back",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "$1"
+    }
+  ]
+}
