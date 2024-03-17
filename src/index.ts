@@ -16,3 +16,5 @@ app.listen(PORT, () => {
 dbConnection()
 
 app.use('/api', router)
+
+export default app

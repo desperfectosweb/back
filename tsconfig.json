@@ -13,6 +13,6 @@
     "typeRoots": ["./@types", "./node_modules/@types"]
   },
   "typeRoots": ["./node_modules/@types", "./src/types"],
-  "include": ["src/**/*.ts", "src/routes/authentication.route.ts"],
+  "include": ["src/**/*.ts", "src/routes/authentication.route.ts", "./api/*.ts "],
   "exclude": ["node_modules"]
 }
